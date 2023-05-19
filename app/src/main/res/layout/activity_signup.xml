@@ -41,7 +41,7 @@
         />
 
     <Button
-        android:id="@+id/btnSignup"
+        android:id="@+id/btnSignup1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="sign up"
