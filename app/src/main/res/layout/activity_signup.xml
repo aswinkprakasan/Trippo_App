@@ -1,63 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:background="@drawable/signup"
-    android:padding="10dp"
     tools:context=".SignupActivity">
-
-    <EditText
-        android:id="@+id/username"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Username"
-        android:textSize="25dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.345"
-        tools:layout_editor_absoluteX="3dp" />
-
-    <EditText
-        android:id="@+id/password"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Password"
-        android:textSize="25dp"
-        android:layout_marginTop="50dp"
-        app:layout_constraintTop_toBottomOf="@+id/username"
-        />
-
-    <EditText
-        android:id="@+id/repassword"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Repassword"
-        android:textSize="25dp"
-        android:layout_marginTop="50dp"
-        app:layout_constraintTop_toBottomOf="@+id/password"
-        />
-
-    <Button
-        android:id="@+id/btnSignup"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="sign up"
-        app:layout_constraintTop_toBottomOf="@+id/repassword"
-        android:backgroundTint="@color/black"
-        android:textSize="25dp"
-        android:layout_marginTop="20dp"/>
-
-    <Button
-        android:id="@+id/btnSignin"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="sign in"
-        app:layout_constraintTop_toBottomOf="@+id/btnSignup"
-        android:backgroundTint="@color/purple_700"
-        android:textSize="25dp"
-        android:layout_marginTop="20dp"/>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="310dp"
+            android:padding="20dp">
+            <EditText
+                android:layout_width="350dp"
+                android:layout_height="60dp"
+                android:id="@+id/username"
+                android:background="@drawable/lavender_border"
+                android:layout_marginTop="30dp"
+                android:padding="8dp"
+                android:hint="username"
+                android:drawableLeft="@drawable/baseline_perm_identity_24"
+                android:drawablePadding="8dp"/>
+            <EditText
+                android:layout_width="350dp"
+                android:layout_height="60dp"
+                android:id="@+id/password"
+                android:background="@drawable/lavender_border"
+                android:layout_marginTop="20dp"
+                android:padding="8dp"
+                android:hint="Password"
+                android:inputType="textPassword"
+                android:drawableLeft="@drawable/baseline_lock_24"
+                android:drawablePadding="8dp"/>
+            <EditText
+                android:layout_width="350dp"
+                android:layout_height="60dp"
+                android:id="@+id/repassword"
+                android:background="@drawable/lavender_border"
+                android:layout_marginTop="20dp"
+                android:padding="8dp"
+                android:hint="Confirm Password"
+                android:inputType="textPassword"
+                android:drawableLeft="@drawable/baseline_password_24"
+                android:drawablePadding="8dp"/>
+            <Button
+                android:layout_width="350dp"
+                android:layout_height="70dp"
+                android:text="Sign Up"
+                android:id="@+id/btnSignup"
+                android:textSize="18sp"
+                android:layout_marginTop="30dp"
+                app:cornerRadius = "30dp"/>
+<!--            <Button-->
+<!--                android:layout_width="350dp"-->
+<!--                android:layout_height="70dp"-->
+<!--                android:text="Sign In"-->
+<!--                android:id="@+id/btnSignin"-->
+<!--                android:textSize="18sp"-->
+<!--                android:layout_marginTop="30dp"-->
+<!--                app:cornerRadius = "30dp"/>-->
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/btnSignin"
+                android:background="#00000000"
+                android:textAllCaps="false"
+                android:text="Already an user? Login"
+                android:layout_gravity="center"
+                android:padding="8dp"
+                android:textSize="18sp"
+                android:layout_marginTop="8dp"
+                android:textColor="@color/lavender"/>
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>
