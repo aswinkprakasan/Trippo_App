@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/login"
+    android:background="@drawable/signin"
     android:orientation="vertical"
     tools:context=".SigninActivity">
     <ScrollView
@@ -59,7 +59,7 @@
                     android:textAllCaps="false"
                     android:padding="8dp"
                     android:text="Not yet registered? Signup"
-                    android:textColor="@color/lavender"
+                    android:textColor="@color/greenish_cyan"
                     android:textSize="18sp" />
             </LinearLayout>
         </LinearLayout>
