@@ -8,5 +8,6 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="lavender">#8692f7</color>
-    <color name="greenish_cyan">#8CF2D8</color>
+    <color name="moonstone">#00A4B4</color>
+    <color name="light_moonstone">#86EAF3</color>
 </resources>

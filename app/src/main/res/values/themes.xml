@@ -2,8 +2,8 @@
     <!-- Base application theme. -->
     <style name="Theme.TrippoApp" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/greenish_cyan</item>
-        <item name="colorPrimaryVariant">@color/greenish_cyan</item>
+        <item name="colorPrimary">@color/moonstone</item>
+        <item name="colorPrimaryVariant">@color/moonstone</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>

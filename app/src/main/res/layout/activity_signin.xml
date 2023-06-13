@@ -59,7 +59,7 @@
                     android:textAllCaps="false"
                     android:padding="8dp"
                     android:text="Not yet registered? Signup"
-                    android:textColor="@color/greenish_cyan"
+                    android:textColor="@color/moonstone"
                     android:textSize="18sp" />
             </LinearLayout>
         </LinearLayout>

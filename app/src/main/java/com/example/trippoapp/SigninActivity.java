@@ -37,7 +37,7 @@ public class SigninActivity extends AppCompatActivity {
                 }
                 else {
                     Boolean result = myDB.checkusernamepass(user, pass);
-                    if (result == true){
+                    if (result){
                         Intent intent = new Intent(getApplicationContext(),HomeActivity.class);
                         startActivity(intent);
                     }
