@@ -11,7 +11,7 @@ import android.widget.Toast;
 
 public class SignupActivity extends AppCompatActivity {
 
-    EditText username, password, repassword;
+    EditText email, password, repassword;
     Button btnSignup, btnSignin;
     DBHelper myDB;
 
@@ -20,7 +20,7 @@ public class SignupActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
 
-        username = findViewById(R.id.username);
+        email = findViewById(R.id.email);
         password = findViewById(R.id.password);
         repassword = findViewById(R.id.repassword);
 
@@ -32,18 +32,19 @@ public class SignupActivity extends AppCompatActivity {
         btnSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String user = username.getText().toString();
+                String mail = email.getText().toString();
                 String pass = password.getText().toString();
                 String repass = repassword.getText().toString();
 
-                if(user.equals("") || pass.equals("") || repass.equals("")){
+                if(mail.equals("") || pass.equals("") || repass.equals("")){
                     Toast.makeText(SignupActivity.this, "Fill all the fields", Toast.LENGTH_SHORT).show();
                 }
                 else {
                     if (pass.equals(repass)){
-                        Boolean usercheckResult = myDB.checkuser(user);
+                        ModelClass modelClass = new ModelClass("User",mail,"",pass,null);
+                        Boolean usercheckResult = myDB.checkuser(modelClass);
                         if (!usercheckResult){
-                            Boolean regResult = myDB.insertData(user, pass);
+                            Boolean regResult = myDB.insertData(modelClass);
                             if (regResult){
                                 Toast.makeText(SignupActivity.this, "Registration successful", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(getApplicationContext(), SigninActivity.class);

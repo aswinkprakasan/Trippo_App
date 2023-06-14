@@ -3,6 +3,7 @@ package com.example.trippoapp;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -11,33 +12,41 @@ import android.widget.Toast;
 
 public class SigninActivity extends AppCompatActivity {
 
-    EditText username, password;
+    EditText email, password;
     Button btnlogin, btnregister;
     DBHelper myDB;
+    SharedPreferences sp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signin);
 
-        username = findViewById(R.id.loginUsername);
-        password = findViewById(R.id.loginPassword);
+        email = findViewById(R.id.login_email);
+        password = findViewById(R.id.login_pass);
         btnlogin = findViewById(R.id.btnLogin);
         btnregister = findViewById(R.id.btnRegister);
 
         myDB = new DBHelper(this);
 
+
         btnlogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String user = username.getText().toString();
+                String mail = email.getText().toString();
                 String pass = password.getText().toString();
 
-                if (user.equals("") || pass.equals("")){
+                if (mail.equals("") || pass.equals("")){
                     Toast.makeText(SigninActivity.this, "All fields are mandatory", Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    Boolean result = myDB.checkusernamepass(user, pass);
+                    ModelClass modelClass = new ModelClass("", mail, "", pass, null);
+                    Boolean result = myDB.checkusernamepass(modelClass);
                     if (result){
+                        sp = getSharedPreferences("MyPref", MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sp.edit();
+                        editor.putString("id",mail);
+                        editor.apply();
+
                         Intent intent = new Intent(getApplicationContext(),HomeActivity.class);
                         startActivity(intent);
                     }

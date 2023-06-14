@@ -56,7 +56,7 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:id="@+id/uploadImage"
+                android:id="@+id/upload_image"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_marginLeft="120dp"
@@ -100,7 +100,7 @@
                     android:layout_marginRight="20dp">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/quote"
+                        android:id="@+id/upload_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
 
@@ -126,7 +126,7 @@
                     >
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/author"
+                        android:id="@+id/upload_email"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="text"
@@ -150,7 +150,7 @@
                     >
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/ph_no"
+                        android:id="@+id/upload_num"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="text"
@@ -159,7 +159,7 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <Button
-                    android:id="@+id/btn_quote"
+                    android:id="@+id/btn_upload"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom"
