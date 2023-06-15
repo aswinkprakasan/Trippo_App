@@ -93,8 +93,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 SharedPreferences.Editor editor = sp.edit();
                 editor.remove("id");
                 editor.apply();
-                Toast.makeText(this, "Logout Successfully", Toast.LENGTH_SHORT).show();
                 recreate();
+                Toast.makeText(this, "Logout Successfully", Toast.LENGTH_SHORT).show();
                 break;
         }
         drawerLayout.closeDrawer(GravityCompat.START);
