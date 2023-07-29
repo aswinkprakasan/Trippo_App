@@ -41,7 +41,7 @@ public class SignupActivity extends AppCompatActivity {
                 }
                 else {
                     if (pass.equals(repass)){
-                        ModelClass modelClass = new ModelClass("User",mail,"",pass,null);
+                        ModelClass modelClass = new ModelClass("",mail,"",pass,null);
                         Boolean usercheckResult = myDB.checkuser(modelClass);
                         if (!usercheckResult){
                             Boolean regResult = myDB.insertData(modelClass);
