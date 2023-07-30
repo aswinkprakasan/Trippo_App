@@ -44,6 +44,11 @@ public class HomeActivity extends AppCompatActivity{
         SharedPreferences sp = getSharedPreferences("MyPref", MODE_PRIVATE);
         String val = sp.getString("id","");
 
+        if (val.isEmpty()){
+            Intent intent = new Intent(this, SigninActivity.class);
+            startActivity(intent);
+        }
+
         DBHelper myDB = new DBHelper(this);
         Cursor cursor = myDB.readData(val);
 

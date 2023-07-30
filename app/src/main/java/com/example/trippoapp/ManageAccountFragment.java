@@ -94,8 +94,10 @@ public class ManageAccountFragment extends Fragment {
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.remove(ManageAccountFragment.this);
-                fragmentTransaction.replace(R.id.fragment_container, new HomeFragment());
                 fragmentTransaction.commit();
+
+                Intent intent = new Intent(getActivity(), SigninActivity.class);
+                startActivity(intent);
 
 //                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ManageAccountFragment()).commit();
                 Toast.makeText(getActivity(), "Logout Successfully", Toast.LENGTH_SHORT).show();

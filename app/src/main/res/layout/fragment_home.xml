@@ -21,12 +21,13 @@
             android:id="@+id/explore"
             android:text="Explore"
             android:textSize="35dp"
+            android:textStyle="bold"
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="@+id/constraint1"
             app:layout_constraintLeft_toLeftOf="@+id/constraint1"
             app:layout_constraintRight_toRightOf="@+id/constraint1"
             app:layout_constraintTop_toTopOf="@+id/constraint1"
-            app:layout_constraintVertical_bias="0.3"
+            app:layout_constraintVertical_bias="0.2"
             app:layout_constraintHorizontal_bias="0.1"/>
 
         <ImageView
@@ -46,7 +47,8 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginTop="200dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -54,7 +56,7 @@
             android:text="Places to visit this month"
             android:textSize="20dp"
             android:textStyle="bold"
-            android:layout_marginTop="210dp"
+            android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"
             android:id="@+id/season"
             />

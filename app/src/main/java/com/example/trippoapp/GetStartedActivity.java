@@ -12,7 +12,6 @@ import android.widget.TextView;
 public class GetStartedActivity extends AppCompatActivity {
 
     Button startBtn;
-    TextView skipBtn;
     SharedPreferences sp;
 
     @Override
@@ -21,7 +20,6 @@ public class GetStartedActivity extends AppCompatActivity {
         setContentView(R.layout.activity_get_started);
 
         startBtn = findViewById(R.id.startButton);
-        skipBtn = findViewById(R.id.skip_btn);
 
         sp = getSharedPreferences("MyPref", MODE_PRIVATE);
         boolean firstTime = sp.getBoolean("FirstTime", true);
@@ -47,13 +45,5 @@ public class GetStartedActivity extends AppCompatActivity {
             }
         });
 
-        skipBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        });
     }
 }
