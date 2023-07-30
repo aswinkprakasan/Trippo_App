@@ -21,42 +21,33 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.navigation.NavigationView;
 
-public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-    private DrawerLayout drawerLayout;
+public class HomeActivity extends AppCompatActivity{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        Toolbar toolbar = findViewById(R.id.toolbar); //Ignore red line errors
-        setSupportActionBar(toolbar);
+//        Toolbar toolbar = findViewById(R.id.toolbar); //Ignore red line errors
+//        setSupportActionBar(toolbar);
 
-        drawerLayout = findViewById(R.id.drawer_layout);
-
-        NavigationView navigationView = findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open_nav,
-                R.string.close_nav);
-
-        drawerLayout.addDrawerListener(toggle);
-        toggle.syncState();
 
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
-            navigationView.setCheckedItem(R.id.nav_home);
         }
 
-        View header = navigationView.getHeaderView(0);
-        ImageView nav_img = header.findViewById(R.id.head_img);
-        TextView nav_name = header.findViewById(R.id.head_name);
-        TextView nav_mail = header.findViewById(R.id.head_mail);
 
         SharedPreferences sp = getSharedPreferences("MyPref", MODE_PRIVATE);
         String val = sp.getString("id","");
+
+        if (val.isEmpty()){
+            Intent intent = new Intent(this, SigninActivity.class);
+            startActivity(intent);
+        }
 
         DBHelper myDB = new DBHelper(this);
         Cursor cursor = myDB.readData(val);
@@ -65,47 +56,31 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             Toast.makeText(this, "Not logged IN", Toast.LENGTH_SHORT).show();
         }
         else {
-            while (cursor.moveToNext()){
-                nav_name.setText("Hi "+cursor.getString(1));
-                nav_mail.setText(cursor.getString(2));
-//                byte[] imageByte = cursor.getBlob(5);
-//
-//                if (imageByte != null && imageByte.length > 0) {
-//                    Bitmap bitmap = BitmapFactory.decodeByteArray(imageByte, 0, imageByte.length);
-//                    nav_img.setImageBitmap(bitmap);
-//                }
+            Toast.makeText(this, "logged in", Toast.LENGTH_SHORT).show();
+        }
+
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_nav);
+        bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.nav_home:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
+                        return true;
+                    case R.id.nav_search:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SearchFragment()).commit();
+                        return true;
+                    case R.id.nav_review:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ReviewFragment()).commit();
+                        return true;
+                    case R.id.nav_manage:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ManageAccountFragment()).commit();
+                        return true;
+                }
+                return false;
             }
-        }
+        });
+
     }
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.nav_home:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
-                break;
-            case R.id.nav_acc:
-                Intent intent = new Intent(getApplicationContext(), ManageAccountActivity.class);
-                startActivity(intent);
-                break;
-            case R.id.logout:
-                Context context = this;
-                SharedPreferences sp = context.getSharedPreferences("MyPref", Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = sp.edit();
-                editor.remove("id");
-                editor.apply();
-                recreate();
-                Toast.makeText(this, "Logout Successfully", Toast.LENGTH_SHORT).show();
-                break;
-        }
-        drawerLayout.closeDrawer(GravityCompat.START);
-        return true;
-    }
-    @Override
-    public void onBackPressed() {
-        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
-            drawerLayout.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
-    }
+
 }

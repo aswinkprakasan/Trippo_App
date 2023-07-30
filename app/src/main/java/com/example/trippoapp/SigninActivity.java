@@ -41,18 +41,25 @@ public class SigninActivity extends AppCompatActivity {
                 else {
                     ModelClass modelClass = new ModelClass("", mail, "", pass, null);
                     Boolean result = myDB.checkusernamepass(modelClass);
-                    if (result){
-                        sp = getSharedPreferences("MyPref", MODE_PRIVATE);
-                        SharedPreferences.Editor editor = sp.edit();
-                        editor.putString("id",mail);
-                        editor.apply();
-
-                        Intent intent = new Intent(getApplicationContext(),HomeActivity.class);
+                    if (mail.equals("admin@gmail.com") || pass.equals("admin123")){
+                        Intent intent = new Intent(getApplicationContext(), AdminActivity.class);
                         startActivity(intent);
                     }
                     else {
-                        Toast.makeText(SigninActivity.this, "Invalid Credential", Toast.LENGTH_SHORT).show();
+                        if (result){
+                            sp = getSharedPreferences("MyPref", MODE_PRIVATE);
+                            SharedPreferences.Editor editor = sp.edit();
+                            editor.putString("id",mail);
+                            editor.apply();
+
+                            Intent intent = new Intent(getApplicationContext(),HomeActivity.class);
+                            startActivity(intent);
+                        }
+                        else {
+                            Toast.makeText(SigninActivity.this, "Invalid Credential", Toast.LENGTH_SHORT).show();
+                        }
                     }
+
                 }
             }
         });
