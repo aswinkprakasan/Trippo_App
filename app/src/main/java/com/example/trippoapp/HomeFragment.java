@@ -56,6 +56,7 @@ public class HomeFragment extends Fragment {
                         String name = document.getString("place");
                         String district = document.getString("district");
                         String state = document.getString("state");
+                        String id = document.getString("placeId");
 
                         Log.d(TAG, "Name: " + name);
                         Log.d(TAG, "District: " + district);
@@ -63,7 +64,7 @@ public class HomeFragment extends Fragment {
 
                         String location = district + state;
 //                        RecycleSeasonClass data = document.toObject(RecycleSeasonClass.class);
-                        seasonClass.add(new RecycleSeasonClass(name,location));
+                        seasonClass.add(new RecycleSeasonClass(name,location,id));
 
                     }
                     RecyclerView recyclerView = view.findViewById(R.id.recycle_view);

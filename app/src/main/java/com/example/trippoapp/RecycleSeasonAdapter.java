@@ -1,12 +1,14 @@
 package com.example.trippoapp;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
@@ -33,6 +35,18 @@ public class RecycleSeasonAdapter extends RecyclerView.Adapter<MyViewHolder> {
         holder.name.setText(seasonClass.get(position).getName());
         holder.location.setText(seasonClass.get(position).getLocation());
 
+        holder.card.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, PlaceDetailsActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra("Id", seasonClass.get(holder.getBindingAdapterPosition()).getId());
+                intent.putExtra("Name", seasonClass.get(holder.getBindingAdapterPosition()).getName());
+                intent.putExtra("Location", seasonClass.get(holder.getBindingAdapterPosition()).getLocation());
+                context.startActivity(intent);
+            }
+        });
+
     }
 
     @Override
@@ -44,10 +58,12 @@ public class RecycleSeasonAdapter extends RecyclerView.Adapter<MyViewHolder> {
 class MyViewHolder extends RecyclerView.ViewHolder{
 
     TextView name, location;
+    CardView card;
     public MyViewHolder(@NonNull View itemView) {
         super(itemView);
 
         name = itemView.findViewById(R.id.name);
         location = itemView.findViewById(R.id.location);
+        card = itemView.findViewById(R.id.card1);
     }
 }

@@ -30,9 +30,25 @@ public class GetStartedActivity extends AppCompatActivity {
             editor.apply();
         }
         else {
-            Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
-            startActivity(intent);
-            finish();
+            String val1 = sp.getString("id","");
+            String val2 = sp.getString("id1","");
+
+            if (!val1.isEmpty()){
+                Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                startActivity(intent);
+                finish();
+            } else if (!val2.isEmpty()) {
+
+                Intent intent = new Intent(getApplicationContext(), AdminActivity.class);
+                startActivity(intent);
+                finish();
+            }
+            else {
+                Intent intent = new Intent(getApplicationContext(), SigninActivity.class);
+                startActivity(intent);
+                finish();
+            }
+
         }
 
 

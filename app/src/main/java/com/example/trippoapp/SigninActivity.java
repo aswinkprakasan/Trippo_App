@@ -42,6 +42,11 @@ public class SigninActivity extends AppCompatActivity {
                     ModelClass modelClass = new ModelClass("", mail, "", pass, null);
                     Boolean result = myDB.checkusernamepass(modelClass);
                     if (mail.equals("admin@gmail.com") || pass.equals("admin123")){
+                        sp = getSharedPreferences("MyPref", MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sp.edit();
+                        editor.putString("id1",mail);
+                        editor.apply();
+
                         Intent intent = new Intent(getApplicationContext(), AdminActivity.class);
                         startActivity(intent);
                     }

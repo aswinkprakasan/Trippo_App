@@ -50,6 +50,7 @@ public class AdminSeasonFragment extends Fragment {
     EditText placeName, districtName, stateName, seasonName;
     TextView search;
     Button submit;
+    String placeID;
     ActivityResultLauncher<Intent> startAutocomplete;
 
     @Override
@@ -64,6 +65,10 @@ public class AdminSeasonFragment extends Fragment {
                         if (intent != null) {
                             Place place = Autocomplete.getPlaceFromIntent(intent);
                             String placeName1 = place.getName();
+
+                            String placeID1 = place.getId();
+                            placeID = placeID1;
+
                             search.setText(placeName1);
                             placeName.setText(placeName1);
 
@@ -155,14 +160,16 @@ public class AdminSeasonFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                String place, district, state, season;
+                String place, district, state, season, id;
                 place = placeName.getText().toString();
                 district = districtName.getText().toString();
                 state = stateName.getText().toString();
                 season = seasonName.getText().toString();
+                id = placeID;
 
                 DocumentReference documentReference = fStore.collection("season").document();
                 Map<String, Object> data = new HashMap<>();
+                data.put("placeId",id);
                 data.put("place", place);
                 data.put("district", district);
                 data.put("state", state);
