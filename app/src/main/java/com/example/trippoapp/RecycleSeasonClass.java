@@ -1,13 +1,25 @@
 package com.example.trippoapp;
 
+import android.graphics.Bitmap;
+
 public class RecycleSeasonClass {
 
     String name, location, id;
+    int pic;
 
-    public RecycleSeasonClass(String name, String location, String id) {
+    public RecycleSeasonClass(String name, String location, String id, int pic) {
         this.name = name;
         this.location = location;
         this.id = id;
+        this.pic = pic;
+    }
+
+    public int getPic() {
+        return pic;
+    }
+
+    public void setPic(int pic) {
+        this.pic = pic;
     }
 
     public String getId() {

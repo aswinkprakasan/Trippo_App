@@ -39,7 +39,7 @@ public class SigninActivity extends AppCompatActivity {
                     Toast.makeText(SigninActivity.this, "All fields are mandatory", Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    ModelClass modelClass = new ModelClass("", mail, "", pass, null);
+                    ModelClass modelClass = new ModelClass("", mail, "", pass);
                     Boolean result = myDB.checkusernamepass(modelClass);
                     if (mail.equals("admin@gmail.com") || pass.equals("admin123")){
                         sp = getSharedPreferences("MyPref", MODE_PRIVATE);

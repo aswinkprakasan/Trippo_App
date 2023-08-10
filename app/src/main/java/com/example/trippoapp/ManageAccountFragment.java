@@ -66,7 +66,7 @@ public class ManageAccountFragment extends Fragment {
                 name = uploadName.getText().toString();
                 number = uploadNum.getText().toString();
                 mail = uploadEmail.getText().toString();
-                ModelClass modelClass = new ModelClass(name,mail,number, "",null);
+                ModelClass modelClass = new ModelClass(name,mail,number, "");
                 Boolean result = myDB.updateData(modelClass);
                 if (result){
                     Toast.makeText(getActivity(), "Saved successfully", Toast.LENGTH_SHORT).show();

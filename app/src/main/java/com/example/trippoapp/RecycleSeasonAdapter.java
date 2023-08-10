@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -34,6 +35,7 @@ public class RecycleSeasonAdapter extends RecyclerView.Adapter<MyViewHolder> {
 
         holder.name.setText(seasonClass.get(position).getName());
         holder.location.setText(seasonClass.get(position).getLocation());
+        holder.imageView.setImageResource(seasonClass.get(position).getPic());
 
         holder.card.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,11 +61,13 @@ class MyViewHolder extends RecyclerView.ViewHolder{
 
     TextView name, location;
     CardView card;
+    ImageView imageView;
     public MyViewHolder(@NonNull View itemView) {
         super(itemView);
 
         name = itemView.findViewById(R.id.name);
         location = itemView.findViewById(R.id.location);
         card = itemView.findViewById(R.id.card1);
+        imageView = itemView.findViewById(R.id.image);
     }
 }

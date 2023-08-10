@@ -19,7 +19,8 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase myDB) {
-        myDB.execSQL("CREATE TABLE users (id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT, email TEXT, password TEXT, number TEXT, image BLOB)");
+        myDB.execSQL("CREATE TABLE users (id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT, email TEXT, password TEXT, number TEXT)");
+        myDB.execSQL("CREATE TABLE ratings (id INTEGER PRIMARY KEY AUTOINCREMENT,email TEXT, placeId TEXT, placeName TEXT, rating INTEGER)");
     }
     @Override
     public void onUpgrade(SQLiteDatabase myDB, int i, int i1) {
@@ -71,15 +72,12 @@ public class DBHelper extends SQLiteOpenHelper {
     public Boolean updateData(ModelClass modelClass){
         SQLiteDatabase myDB = this.getWritableDatabase();
 
-//        Bitmap bitmapImage = modelClass.getImage();
-//        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-//        bitmapImage.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
-//        byte[] byteImage = byteArrayOutputStream.toByteArray();
+
 
         ContentValues contentValues = new ContentValues();
         contentValues.put("username",modelClass.getName());
         contentValues.put("number",modelClass.getNum());
-//        contentValues.put("image", byteImage);
+
 
         String whereClause = "email=?";
         String[] whereArgs = {modelClass.getEmail()};

@@ -4,14 +4,12 @@ import android.graphics.Bitmap;
 
 public class ModelClass {
     private String name, email, num, pass;
-    private Bitmap image;
 
-    public ModelClass(String name, String email, String num, String pass, Bitmap image) {
+    public ModelClass(String name, String email, String num, String pass) {
         this.name = name;
         this.email = email;
         this.num = num;
         this.pass = pass;
-        this.image = image;
     }
     public String getName() {
         return name;
@@ -37,13 +35,6 @@ public class ModelClass {
         this.num = num;
     }
 
-    public Bitmap getImage() {
-        return image;
-    }
-
-    public void setImage(Bitmap image) {
-        this.image = image;
-    }
 
     public String getPass() {
         return pass;
