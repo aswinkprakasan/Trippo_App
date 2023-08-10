@@ -10,6 +10,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.trippoapp.model.ModelClass;
+
 public class SigninActivity extends AppCompatActivity {
 
     EditText email, password;

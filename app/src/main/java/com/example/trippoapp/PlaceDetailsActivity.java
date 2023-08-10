@@ -10,6 +10,8 @@ import androidx.fragment.app.FragmentContainerView;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -42,6 +44,8 @@ public class PlaceDetailsActivity extends AppCompatActivity implements OnMapRead
     PlacesClient placesClient;
     private GoogleMap mMap;
     Button getLoc;
+    String plceId,nme;
+    LatLng latLng;
 
 
     @Override
@@ -78,20 +82,40 @@ public class PlaceDetailsActivity extends AppCompatActivity implements OnMapRead
         mapFragment.getMapAsync(this);
 
         getPhoto(placeId);
-        String plceId = placeId;
-        String nme = name1;
+        plceId = placeId;
+        nme = name1;
+
+        latLng = getfromAddress(name1);
+
         getLoc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String id = plceId;
-                String name = nme;
                 Intent intent = new Intent(PlaceDetailsActivity.this, MapsActivity.class);
-                intent.putExtra("id",id);
-                intent.putExtra("name",name);
+                intent.putExtra("id", plceId);
+                intent.putExtra("name", nme);
                 startActivity(intent);
             }
         });
 
+    }
+
+    private LatLng getfromAddress(String placeName) {
+        Geocoder geocoder = new Geocoder(PlaceDetailsActivity.this);
+        List<Address> addressList;
+
+        try {
+            addressList = geocoder.getFromLocationName(placeName, 1);
+            if (addressList != null) {
+                Address singleaddress = addressList.get(0);
+                LatLng latLng = new LatLng(singleaddress.getLatitude(), singleaddress.getLongitude());
+                return latLng;
+            } else {
+                return null;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     private void getPhoto(String placeId) {
@@ -139,9 +163,9 @@ public class PlaceDetailsActivity extends AppCompatActivity implements OnMapRead
         mMap = googleMap;
 
         // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+//        LatLng sydney = new LatLng(-34, 151);
+        mMap.addMarker(new MarkerOptions().position(latLng).title("Marker in Sydney"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
 
     }
 }

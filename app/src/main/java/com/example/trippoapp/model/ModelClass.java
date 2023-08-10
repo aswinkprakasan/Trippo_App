@@ -1,4 +1,4 @@
-package com.example.trippoapp;
+package com.example.trippoapp.model;
 
 import android.graphics.Bitmap;
 

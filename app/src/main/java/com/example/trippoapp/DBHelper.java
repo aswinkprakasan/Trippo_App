@@ -2,15 +2,11 @@ package com.example.trippoapp;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.graphics.Bitmap;
 
-import androidx.annotation.Nullable;
-
-import java.io.ByteArrayOutputStream;
+import com.example.trippoapp.model.ModelClass;
 
 public class DBHelper extends SQLiteOpenHelper {
     public DBHelper(Context context) {

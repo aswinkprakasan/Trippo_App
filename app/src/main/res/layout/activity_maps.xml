@@ -33,6 +33,12 @@
             android:text="Parking"
             android:layout_marginStart="10dp"
             android:id="@+id/parking"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nearby"
+            android:layout_marginStart="10dp"
+            android:id="@+id/nearby"/>
 
     </LinearLayout>
     <androidx.fragment.app.FragmentContainerView

@@ -12,6 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.trippoapp.model.RecycleSeasonClass;
+
 import java.util.List;
 
 public class RecycleSeasonAdapter extends RecyclerView.Adapter<MyViewHolder> {

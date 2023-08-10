@@ -19,6 +19,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.trippoapp.model.ModelClass;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 
