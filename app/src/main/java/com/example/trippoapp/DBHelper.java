@@ -16,7 +16,7 @@ public class DBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase myDB) {
         myDB.execSQL("CREATE TABLE users (id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT, email TEXT, password TEXT, number TEXT)");
-        myDB.execSQL("CREATE TABLE ratings (id INTEGER PRIMARY KEY AUTOINCREMENT,email TEXT, placeId TEXT, placeName TEXT, rating FLOAT)");
+        myDB.execSQL("CREATE TABLE ratings (id INTEGER PRIMARY KEY AUTOINCREMENT,email TEXT, placeId TEXT, placeName TEXT, rating FLOAT, review TEXT)");
     }
     @Override
     public void onUpgrade(SQLiteDatabase myDB, int i, int i1) {
@@ -45,6 +45,7 @@ public class DBHelper extends SQLiteOpenHelper {
         contentValues.put("placeId", id);
         contentValues.put("placeName", name);
         contentValues.put("rating", rating);
+        contentValues.put("review", "");
         long result = myDB.insert("ratings",null,contentValues);
         if (result == -1){
             return false;
@@ -89,6 +90,30 @@ public class DBHelper extends SQLiteOpenHelper {
             return true;
         }
 
+    }
+
+    public Boolean updateReview(String review, String placeid, String email){
+        SQLiteDatabase myDB = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("review", review);
+
+        String whereClause = "placeId = ? and email = ?";
+        String[] whereArgs = {placeid, email};
+
+        long result = myDB.update("ratings", contentValues, whereClause, whereArgs);
+
+        if (result == -1){
+            return false;
+        }
+        else {
+            return true;
+        }
+
+    }
+    public Cursor readReview(String email){
+        SQLiteDatabase myDB = this.getReadableDatabase();
+        Cursor cursor = myDB.rawQuery("select * from ratings where email = ?", new String[] {email});
+        return cursor;
     }
     public Boolean checkuser(ModelClass modelClass){
         SQLiteDatabase myDB = this.getWritableDatabase();

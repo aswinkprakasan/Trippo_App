@@ -49,15 +49,6 @@
                 android:layout_marginStart="35dp"
                 android:stepSize="1" />
 
-            <ImageView
-                android:id="@+id/ratingButton"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="40dp"
-                android:src="@drawable/baseline_check_24"
-                app:tint="@color/moonstone"
-                android:layout_toRightOf="@+id/ratingBar"/>
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -75,7 +66,7 @@
                 android:layout_below="@+id/ratingBar">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/upload_name"
+                    android:id="@+id/upload_review"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:inputType="textMultiLine|textCapSentences"
@@ -84,6 +75,14 @@
                     android:textColor="@color/black" />
 
             </com.google.android.material.textfield.TextInputLayout>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/edit_text_box"
+                android:id="@+id/submit"
+                android:text="Submit"
+                android:layout_alignEnd="@id/edit_text_box"
+                />
 
             <androidx.fragment.app.FragmentContainerView
                 android:id="@+id/map"
@@ -91,7 +90,7 @@
                 android:layout_width="250dp"
                 android:layout_height="250dp"
                 android:layout_marginStart="75dp"
-                android:layout_below="@+id/edit_text_box"
+                android:layout_below="@+id/submit"
                 android:layout_marginTop="20dp"
                 tools:context="com.example.trippoapp.PlaceDetailsActivity"
                 tools:layout="@layout/places_autocomplete_prediction" />

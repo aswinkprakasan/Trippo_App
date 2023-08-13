@@ -18,6 +18,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RatingBar;
@@ -52,10 +53,11 @@ public class PlaceDetailsActivity extends AppCompatActivity implements OnMapRead
 
     TextView name;
     RatingBar ratingBar;
-    ImageView imageView, ratingBut;
+    ImageView imageView;
     PlacesClient placesClient;
-    private GoogleMap mMap;
-    Button getLoc;
+    GoogleMap mMap;
+    Button getLoc, reviewBtn;
+    EditText review;
     String plceId,nme;
     LatLng latLng;
     DBHelper db;
@@ -70,7 +72,8 @@ public class PlaceDetailsActivity extends AppCompatActivity implements OnMapRead
         imageView = findViewById(R.id.image);
         getLoc = findViewById(R.id.get_location);
         ratingBar = findViewById(R.id.ratingBar);
-        ratingBut = findViewById(R.id.ratingButton);
+        reviewBtn = findViewById(R.id.submit);
+        review = findViewById(R.id.upload_review);
 
         db = new DBHelper(this);
 
@@ -128,7 +131,7 @@ public class PlaceDetailsActivity extends AppCompatActivity implements OnMapRead
             while (cursor.moveToNext()) {
 
                 ratingBar.setRating(cursor.getFloat(4));
-
+                review.setText(cursor.getString(5));
                 cursor.close();
             }
         }
@@ -167,6 +170,26 @@ public class PlaceDetailsActivity extends AppCompatActivity implements OnMapRead
             }
         });
 
+
+        reviewBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String reviewValue = review.getText().toString();
+                Toast.makeText(PlaceDetailsActivity.this, reviewValue, Toast.LENGTH_SHORT).show();
+                if (!reviewValue.isEmpty()){
+                    Boolean result = db.updateReview(reviewValue, plceId, val);
+                    if (result){
+                        Toast.makeText(PlaceDetailsActivity.this, "review updated", Toast.LENGTH_SHORT).show();
+                    }
+                    else {
+                        Toast.makeText(PlaceDetailsActivity.this, "review failed", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                else {
+                    Toast.makeText(PlaceDetailsActivity.this, "empty review", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
     private void checkFStore(String id, String name, float rating) {

@@ -87,7 +87,6 @@ public class HomeFragment extends Fragment {
                         Log.d(TAG, "State: " + state);
 
                         String location = district + state;
-//                        RecycleSeasonClass data = document.toObject(RecycleSeasonClass.class);
                         seasonClass.add(new RecycleSeasonClass(name,location,id,pic));
 
                     }
