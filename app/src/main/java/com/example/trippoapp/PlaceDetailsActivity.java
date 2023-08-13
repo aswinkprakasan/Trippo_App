@@ -164,7 +164,6 @@ public class PlaceDetailsActivity extends AppCompatActivity implements OnMapRead
                 }
 
 
-//                Toast.makeText(PlaceDetailsActivity.this, "Rating: " + rating, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -184,6 +183,9 @@ public class PlaceDetailsActivity extends AppCompatActivity implements OnMapRead
                else {
                    addRatingToFStore(id, name, rating);
                }
+           }
+           else {
+               Log.d(TAG, "checkFStore: error");
            }
         });
     }

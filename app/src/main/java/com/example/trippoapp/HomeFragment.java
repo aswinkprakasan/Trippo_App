@@ -16,10 +16,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.example.trippoapp.adapter.HigherRatingAdapter;
 import com.example.trippoapp.adapter.RecycleSeasonAdapter;
+import com.example.trippoapp.model.HigherRatingClass;
 import com.example.trippoapp.model.RecycleSeasonClass;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.net.PlacesClient;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -44,8 +47,6 @@ public class HomeFragment extends Fragment {
         imageView = view.findViewById(R.id.imageView);
         fStore = FirebaseFirestore.getInstance();
 
-        String fName = "season";
-        String fValue = "winter";
 
         Bundle metaData;
         try {
@@ -53,13 +54,16 @@ public class HomeFragment extends Fragment {
         } catch (PackageManager.NameNotFoundException e) {
             throw new RuntimeException(e);
         }
-
         String apiKey = metaData.getString("com.google.android.geo.API_KEY");
+
         if (!Places.isInitialized()) {
             Places.initialize(getActivity().getApplicationContext(), apiKey);
         }
         placesClient = Places.createClient(getActivity());
 
+
+        String fName = "season";
+        String fValue = "winter";
         Query query = fStore.collection("season").whereEqualTo(fName, fValue);
 
         List<RecycleSeasonClass> seasonClass = new ArrayList<RecycleSeasonClass>();
@@ -97,6 +101,78 @@ public class HomeFragment extends Fragment {
                 }
             }
         });
+
+//        String fName1 = "rating";
+//        Double fValue1 = 4.0;
+//
+//        String fName2 = "count";
+//        Double fValue2 = 3.0;
+
+        Query query1 = fStore.collection("ratings").whereGreaterThan("rating", 4.0);
+        Query query2 = fStore.collection("ratings").whereGreaterThan("count", 2.0);
+
+        Task<QuerySnapshot> ratingTask = query1.get();
+        Task<QuerySnapshot> countTask = query2.get();
+
+        List<HigherRatingClass> ratingClass = new ArrayList<HigherRatingClass>();
+
+        Tasks.whenAllSuccess(ratingTask, countTask).addOnCompleteListener(new OnCompleteListener<List<Object>>() {
+            @Override
+            public void onComplete(@NonNull Task<List<Object>> task) {
+
+                if (task.isSuccessful()){
+                    List<DocumentSnapshot> ratingDocuments = ratingTask.getResult().getDocuments();
+                    List<DocumentSnapshot> countDocuments = countTask.getResult().getDocuments();
+
+                    for (DocumentSnapshot ratingDoc : ratingDocuments) {
+                        for (DocumentSnapshot countDoc : countDocuments) {
+                            if (ratingDoc.getString("placeID").equals(countDoc.getString("placeID"))) {
+                                // You have a match for both rating and count conditions
+                                String name = ratingDoc.getString("placeName");
+                                String id = ratingDoc.getString("placeID");
+                                Double rating = ratingDoc.getDouble("rating");
+                                String rat = String.format("%.1f", rating);
+                                int pic = R.drawable.summer;
+
+                                ratingClass.add(new HigherRatingClass(name, id, rat, pic));
+                            }
+                        }
+                    }
+                    RecyclerView recyclerView = view.findViewById(R.id.recycle_view1);
+                    recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false));
+                    recyclerView.setAdapter(new HigherRatingAdapter(getActivity().getApplicationContext(),ratingClass));
+                }
+                else {
+                    Log.d(TAG, "Error getting documents in rating: ", task.getException());
+                }
+            }
+        });
+//        query1.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//            @Override
+//            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                if (task.isSuccessful()){
+//                    List<DocumentSnapshot> documents = task.getResult().getDocuments();
+//
+//                    for (DocumentSnapshot documentSnapshot : documents){
+//                        String name = documentSnapshot.getString("placeName");
+//                        String id = documentSnapshot.getString("placeID");
+//                        Double rating = documentSnapshot.getDouble("rating");
+//
+//                        String rat = String.format("%.1f", rating);
+//
+//                        int pic = R.drawable.summer;
+//
+//                        ratingClass.add(new HigherRatingClass(name, id, rat, pic));
+//                    }
+//                    RecyclerView recyclerView = view.findViewById(R.id.recycle_view1);
+//                    recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false));
+//                    recyclerView.setAdapter(new HigherRatingAdapter(getActivity().getApplicationContext(),ratingClass));
+//                }
+//                else {
+//                    Log.d(TAG, "Error getting documents in rating: ", task.getException());
+//                }
+//            }
+//        });
 
 
 //        seasonClass.add(new RecycleSeasonClass("Kunnamkulam", "kunnamkulam, Thrissur"));
