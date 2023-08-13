@@ -16,7 +16,7 @@ public class DBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase myDB) {
         myDB.execSQL("CREATE TABLE users (id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT, email TEXT, password TEXT, number TEXT)");
-        myDB.execSQL("CREATE TABLE ratings (id INTEGER PRIMARY KEY AUTOINCREMENT,email TEXT, placeId TEXT, placeName TEXT, rating INTEGER)");
+        myDB.execSQL("CREATE TABLE ratings (id INTEGER PRIMARY KEY AUTOINCREMENT,email TEXT, placeId TEXT, placeName TEXT, rating FLOAT)");
     }
     @Override
     public void onUpgrade(SQLiteDatabase myDB, int i, int i1) {
@@ -38,6 +38,58 @@ public class DBHelper extends SQLiteOpenHelper {
         }
     }
 
+    public Boolean insertRating(String email, String id, String name, float rating){
+        SQLiteDatabase myDB = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("email", email);
+        contentValues.put("placeId", id);
+        contentValues.put("placeName", name);
+        contentValues.put("rating", rating);
+        long result = myDB.insert("ratings",null,contentValues);
+        if (result == -1){
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+    public Boolean checkRating(String placeid, String email){
+        SQLiteDatabase myDB = this.getWritableDatabase();
+        Cursor cursor = myDB.rawQuery("select * from ratings where placeId = ? and email = ?", new String[] {placeid, email});
+        if(cursor.getCount()>0){
+            cursor.close();
+            return true;
+        }
+        else{
+            cursor.close();
+            return false;
+        }
+    }
+
+    public Cursor readRating(String placeid, String email){
+        SQLiteDatabase myDB = this.getReadableDatabase();
+        Cursor cursor = myDB.rawQuery("select * from ratings where placeId = ?  and email = ?", new String[] {placeid, email});
+        return cursor;
+    }
+
+    public Boolean updateRating(float rating, String placeid, String email){
+        SQLiteDatabase myDB = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("rating", rating);
+
+        String whereClause = "placeId = ? and email = ?";
+        String[] whereArgs = {placeid, email};
+
+        long result = myDB.update("ratings", contentValues, whereClause, whereArgs);
+
+        if (result == -1){
+            return false;
+        }
+        else {
+            return true;
+        }
+
+    }
     public Boolean checkuser(ModelClass modelClass){
         SQLiteDatabase myDB = this.getWritableDatabase();
         String email = modelClass.getEmail();

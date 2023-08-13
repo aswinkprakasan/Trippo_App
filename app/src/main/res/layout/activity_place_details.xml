@@ -47,7 +47,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
                 android:layout_marginStart="35dp"
-                android:stepSize="0.5" />
+                android:stepSize="1" />
 
             <ImageView
                 android:id="@+id/ratingButton"

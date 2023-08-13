@@ -6,41 +6,59 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".MapsActivity">
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <HorizontalScrollView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:id="@+id/linear"
-        android:orientation="horizontal">
+        android:id="@+id/scroll">
 
-        <Button
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="route"
-            android:layout_marginStart="10dp"
-            android:id="@+id/route"/>
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="restaurant"
-            android:layout_marginStart="10dp"
-            android:id="@+id/restaurant"/>
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Parking"
-            android:layout_marginStart="10dp"
-            android:id="@+id/parking"/>
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Nearby"
-            android:layout_marginStart="10dp"
-            android:id="@+id/nearby"/>
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:id="@+id/linear"
+            android:orientation="horizontal">
 
-    </LinearLayout>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="route"
+                android:layout_marginStart="10dp"
+                android:id="@+id/route"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="restaurant"
+                android:layout_marginStart="10dp"
+                android:id="@+id/restaurant"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Parking"
+                android:layout_marginStart="10dp"
+                android:id="@+id/parking"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nearby"
+                android:layout_marginStart="10dp"
+                android:id="@+id/nearby"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Clear"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:backgroundTint="@color/red"
+                android:id="@+id/clear"/>
+
+        </LinearLayout>
+
+
+    </HorizontalScrollView>
     <androidx.fragment.app.FragmentContainerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -49,7 +67,7 @@
         tools:context=".MapsActivity"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         tools:layout="@layout/places_autocomplete_prediction"
-        app:layout_constraintTop_toBottomOf="@+id/linear"
+        app:layout_constraintTop_toBottomOf="@+id/scroll"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

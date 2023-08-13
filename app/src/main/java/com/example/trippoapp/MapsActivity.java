@@ -33,15 +33,20 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
-    Button restau;
+    Button restaurant, route, parking, nearby, clear;
     LatLng latLng1;
+    String name1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
 
-        restau = findViewById(R.id.restaurant);
+        restaurant = findViewById(R.id.restaurant);
+        route = findViewById(R.id.route);
+        parking = findViewById(R.id.parking);
+        nearby = findViewById(R.id.nearby);
+        clear = findViewById(R.id.clear);
 
         Bundle bundle = getIntent().getExtras();
         String placeId = null, name = null;
@@ -50,19 +55,68 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             name = bundle.getString("name");
         }
 
-
-        LatLng latLng = getfromAddress(name);
+        name1 = name;
+        LatLng latLng = getfromName(name);
         latLng1 = latLng;
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-        restau.setOnClickListener(new View.OnClickListener() {
+        restaurant.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mMap.clear();
-                fetchAndDisplayNearbyRestaurants(latLng);
 
+                String type = "restaurant";
+                int rad = 5000;
+                assert latLng != null;
+                fetchAndDisplayNearbyRestaurants(latLng, type, rad);
+
+            }
+        });
+
+        route.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mMap.clear();
+
+                String type = "parking";
+                int rad = 5000;
+                assert latLng != null;
+                fetchAndDisplayNearbyRestaurants(latLng, type, rad);
+            }
+        });
+
+        parking.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mMap.clear();
+
+                String type = "parking";
+                int rad = 1500;
+                assert latLng != null;
+                fetchAndDisplayNearbyRestaurants(latLng, type, rad);
+            }
+        });
+
+        nearby.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mMap.clear();
+
+                String type = "tourist_attraction";
+                int rad = 100000;
+                assert latLng != null;
+                fetchAndDisplayNearbyRestaurants(latLng, type, rad);
+            }
+        });
+
+        clear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mMap.clear();
+
+                mMap.addMarker(new MarkerOptions().position(latLng).title(name1));
             }
         });
     }
@@ -73,13 +127,13 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         // Add a marker in Sydney and move the camera
 //        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(latLng1).title("Marker in Sydney"));
+        mMap.addMarker(new MarkerOptions().position(latLng1).title(name1));
         float zoomLevel = 10.0f;
         CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng1, zoomLevel);
         mMap.animateCamera(cameraUpdate);
     }
 
-    private LatLng getfromAddress(String placeName) {
+    private LatLng getfromName(String placeName) {
         Geocoder geocoder = new Geocoder(MapsActivity.this);
         List<Address> addressList;
 
@@ -98,11 +152,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
     }
 
-    private void fetchAndDisplayNearbyRestaurants(LatLng location) {
+    private void fetchAndDisplayNearbyRestaurants(LatLng location, String type, int rad) {
 
         String PLACES_API_BASE = "https://maps.googleapis.com/maps/api/place/";
-        String TYPE_RESTAURANT = "restaurant";    //tourist_attraction//restaurant//parking
-        int RADIUS = 5000;
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(PLACES_API_BASE)
@@ -112,8 +164,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         PlacesApiService service = retrofit.create(PlacesApiService.class);
         Call<PlacesResponse> call = service.getNearbyRestaurants(
                 location.latitude + "," + location.longitude,
-                RADIUS,
-                TYPE_RESTAURANT,
+                rad,
+                type,
                 BuildConfig.MAPS_API_KEY
         );
 

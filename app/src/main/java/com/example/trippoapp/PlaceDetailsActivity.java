@@ -8,7 +8,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentContainerView;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.location.Address;
 import android.location.Geocoder;
@@ -18,7 +20,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -27,26 +31,35 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.PhotoMetadata;
 import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.api.net.FetchPhotoRequest;
 import com.google.android.libraries.places.api.net.FetchPlaceRequest;
 import com.google.android.libraries.places.api.net.PlacesClient;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class PlaceDetailsActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     TextView name;
-    ImageView imageView;
+    RatingBar ratingBar;
+    ImageView imageView, ratingBut;
     PlacesClient placesClient;
     private GoogleMap mMap;
     Button getLoc;
     String plceId,nme;
     LatLng latLng;
-
+    DBHelper db;
+    FirebaseFirestore fStore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +69,15 @@ public class PlaceDetailsActivity extends AppCompatActivity implements OnMapRead
         name = findViewById(R.id.name1);
         imageView = findViewById(R.id.image);
         getLoc = findViewById(R.id.get_location);
+        ratingBar = findViewById(R.id.ratingBar);
+        ratingBut = findViewById(R.id.ratingButton);
+
+        db = new DBHelper(this);
+
+        fStore = FirebaseFirestore.getInstance();
+
+        SharedPreferences sp = getSharedPreferences("MyPref", MODE_PRIVATE);
+        String val = sp.getString("id","");
 
         Bundle metaData;
         try {
@@ -94,6 +116,124 @@ public class PlaceDetailsActivity extends AppCompatActivity implements OnMapRead
                 intent.putExtra("id", plceId);
                 intent.putExtra("name", nme);
                 startActivity(intent);
+            }
+        });
+
+        Cursor cursor = db.readRating(plceId, val);
+
+        if (cursor.getCount() == 0) {
+            Toast.makeText(this, "no rating", Toast.LENGTH_SHORT).show();
+
+        } else {
+            while (cursor.moveToNext()) {
+
+                ratingBar.setRating(cursor.getFloat(4));
+
+                cursor.close();
+            }
+        }
+        ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+                // Do something with the new rating value
+                Boolean resultCheck = db.checkRating(plceId, val);
+                if (resultCheck){
+
+                    Boolean resultUpdate = db.updateRating(rating, plceId, val);
+                    if (resultUpdate){
+                        Toast.makeText(PlaceDetailsActivity.this, "rating updated", Toast.LENGTH_SHORT).show();
+
+                    }
+                    else {
+                        Toast.makeText(PlaceDetailsActivity.this, "rating failed", Toast.LENGTH_SHORT).show();
+                    }
+
+                }
+                else {
+
+                    checkFStore(plceId, nme, rating);
+
+                    Boolean result = db.insertRating(val, plceId, nme, rating);
+                    if (result){
+                        Toast.makeText(PlaceDetailsActivity.this, "rating added", Toast.LENGTH_SHORT).show();
+
+                    }
+                    else {
+                        Toast.makeText(PlaceDetailsActivity.this, "rating failed", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+
+//                Toast.makeText(PlaceDetailsActivity.this, "Rating: " + rating, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
+    private void checkFStore(String id, String name, float rating) {
+
+        DocumentReference documentReference = fStore.collection("ratings").document(id);
+        documentReference.get().addOnCompleteListener(task -> {
+           if (task.isSuccessful()){
+               DocumentSnapshot documentSnapshot = task.getResult();
+               if (documentSnapshot.exists()){
+                   Double sum = documentSnapshot.getDouble("sum");
+                   Double count = documentSnapshot.getDouble("count");
+                   updateFstore(id, rating, sum, count);
+               }
+               else {
+                   addRatingToFStore(id, name, rating);
+               }
+           }
+        });
+    }
+
+    private void updateFstore(String id, float rating, Double sum, Double count) {
+
+        sum += rating;
+        count++;
+
+        Double avg = sum/count;
+
+        DocumentReference documentReference = fStore.collection("ratings").document(id);
+        Map<String, Object> updates = new HashMap<>();
+        updates.put("rating", avg);
+        updates.put("sum", sum);
+        updates.put("count", count);
+
+        documentReference.update(updates).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+                Toast.makeText(PlaceDetailsActivity.this, "success updated fstore", Toast.LENGTH_SHORT).show();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(PlaceDetailsActivity.this, "update fstore failed", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
+
+    private void addRatingToFStore(String placeId, String name, float rating) {
+        DocumentReference documentReference = fStore.collection("ratings").document(placeId);
+        Map<String, Object> data = new HashMap<>();
+        data.put("placeID", placeId);
+        data.put("placeName", name);
+        data.put("rating", rating);
+        data.put("count", 1);
+        data.put("sum", rating);
+
+        documentReference.set(data).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+                Toast.makeText(PlaceDetailsActivity.this, "firestore Added successfully", Toast.LENGTH_SHORT).show();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(PlaceDetailsActivity.this, "firestore failed", Toast.LENGTH_SHORT).show();
             }
         });
 

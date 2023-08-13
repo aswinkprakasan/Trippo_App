@@ -1,4 +1,4 @@
-package com.example.trippoapp;
+package com.example.trippoapp.adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,6 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.trippoapp.PlaceDetailsActivity;
+import com.example.trippoapp.R;
 import com.example.trippoapp.model.RecycleSeasonClass;
 
 import java.util.List;
