@@ -6,15 +6,17 @@ import android.database.Cursor;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.example.trippoapp.model.MyDataModel;
-import com.example.trippoapp.model.ReviewModel;
+import com.example.trippoapp.adapter.RecycleAdminAdapter;
+import com.example.trippoapp.adapter.RecycleReviewAdapter;
+import com.example.trippoapp.model.AdminRecycleClass;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,28 +37,27 @@ public class ReviewFragment extends Fragment {
         SharedPreferences sp = getActivity().getSharedPreferences("MyPref", Context.MODE_PRIVATE);
         String val = sp.getString("id","");
 
-        List<ReviewModel> dataList = new ArrayList<>();
+        List<AdminRecycleClass> dataList = new ArrayList<>();
         Cursor cursor = db.readReview(val);
         if (cursor.moveToFirst()) {
             do {
                 // Extract data from the cursor
                 String name = cursor.getString(3);
                 String review = cursor.getString(5);
+                String plId = cursor.getString(2);
 
                 if (!review.isEmpty()){
-                    dataList.add(new ReviewModel(name, review));
+                    dataList.add(new AdminRecycleClass(name, review, plId));
                 }
                 // Create a data model and add to the list
 
 
             } while (cursor.moveToNext());
         }
-        ArrayAdapter<ReviewModel> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, dataList);
-
-// Set the adapter to your ListView
-        listView = view.findViewById(R.id.listView);
-        listView.setAdapter(adapter);
-
+        RecyclerView recyclerView = view.findViewById(R.id.recycle_view);
+        recyclerView.setEnabled(false);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
+        recyclerView.setAdapter(new RecycleReviewAdapter(getActivity().getApplicationContext(),dataList));
         return view;
     }
 }

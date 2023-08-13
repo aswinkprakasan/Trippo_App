@@ -59,7 +59,7 @@ public class AdminActivity extends AppCompatActivity {
                     for (DocumentSnapshot document : documents){
                         String name = document.getString("place");
                         String season = document.getString("season");
-                        String id = document.getString("placeID");
+//                        String id = document.getString("placeID");
 
                         String docId = document.getId();
                         adminRecycle.add(new AdminRecycleClass(name, season, docId));
