@@ -59,6 +59,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"
             android:id="@+id/season"
+            android:textColor="@color/black"
             />
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
@@ -72,9 +73,10 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Common places"
+            android:text="Highly rated places"
             android:textSize="20dp"
             android:textStyle="bold"
+            android:textColor="@color/black"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"
             android:id="@+id/trend"

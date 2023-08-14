@@ -67,6 +67,9 @@ public class HomeActivity extends AppCompatActivity{
                     case R.id.nav_home:
                         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
                         return true;
+                    case R.id.nav_bucket:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ItineraryFragment()).commit();
+                        return true;
                     case R.id.nav_search:
                         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SearchFragment()).commit();
                         return true;

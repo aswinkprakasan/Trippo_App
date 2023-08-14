@@ -21,6 +21,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -47,10 +49,12 @@ public class AdminSeasonFragment extends Fragment {
 
     ImageView close;
     FirebaseFirestore fStore;
-    EditText placeName, districtName, stateName, seasonName;
+    EditText placeName, districtName, stateName;
     TextView search;
     Button submit;
+    String placeID;
     ActivityResultLauncher<Intent> startAutocomplete;
+    AutoCompleteTextView autoCompleteTextView;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -64,6 +68,10 @@ public class AdminSeasonFragment extends Fragment {
                         if (intent != null) {
                             Place place = Autocomplete.getPlaceFromIntent(intent);
                             String placeName1 = place.getName();
+
+                            String placeID1 = place.getId();
+                            placeID = placeID1;
+
                             search.setText(placeName1);
                             placeName.setText(placeName1);
 
@@ -109,9 +117,9 @@ public class AdminSeasonFragment extends Fragment {
         placeName = view.findViewById(R.id.place_name);
         districtName = view.findViewById(R.id.district_name);
         stateName = view.findViewById(R.id.state_name);
-        seasonName = view.findViewById(R.id.season_name);
         search = view.findViewById(R.id.search1);
         submit = view.findViewById(R.id.submit);
+        autoCompleteTextView = view.findViewById(R.id.season_name);
 
         fStore = FirebaseFirestore.getInstance();
 
@@ -126,6 +134,9 @@ public class AdminSeasonFragment extends Fragment {
         if (!Places.isInitialized()){
             Places.initialize(getActivity().getApplicationContext(),apiKey);
         }
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_dropdown_item_1line, getResources().getStringArray(R.array.season_array));
+        autoCompleteTextView.setAdapter(adapter);
 
         search.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -155,14 +166,16 @@ public class AdminSeasonFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                String place, district, state, season;
+                String place, district, state, season, id;
                 place = placeName.getText().toString();
                 district = districtName.getText().toString();
                 state = stateName.getText().toString();
-                season = seasonName.getText().toString();
+                season = autoCompleteTextView.getText().toString();
+                id = placeID;
 
                 DocumentReference documentReference = fStore.collection("season").document();
                 Map<String, Object> data = new HashMap<>();
+                data.put("placeId",id);
                 data.put("place", place);
                 data.put("district", district);
                 data.put("state", state);
