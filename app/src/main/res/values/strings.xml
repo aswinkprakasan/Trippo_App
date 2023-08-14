@@ -6,4 +6,10 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_maps">MapsActivity</string>
+    
+    <string-array name="season_array">
+        <item>winter</item>
+        <item>summer</item>
+        <item>monsoon</item>
+    </string-array>
 </resources>

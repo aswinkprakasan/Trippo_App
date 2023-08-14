@@ -32,6 +32,7 @@ public class AdminActivity extends AppCompatActivity {
     Button season, logout;
     FrameLayout fragmnetContainer;
     FirebaseFirestore fStore;
+    RecyclerView recyclerView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,7 +67,7 @@ public class AdminActivity extends AppCompatActivity {
 
                     }
 
-                    RecyclerView recyclerView = findViewById(R.id.recycle_view);
+                    recyclerView = findViewById(R.id.recycle_view);
 
                     recyclerView.setLayoutManager(new LinearLayoutManager(AdminActivity.this, RecyclerView.VERTICAL, false));
                     recyclerView.setAdapter(new RecycleAdminAdapter(getApplicationContext(),adminRecycle));
@@ -87,6 +88,7 @@ public class AdminActivity extends AppCompatActivity {
                 fragmentTransaction.commit();
 
                 season.setVisibility(View.GONE);
+                recyclerView.setVisibility(View.GONE);
 
             }
         });
