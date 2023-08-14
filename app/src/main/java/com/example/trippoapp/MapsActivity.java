@@ -9,6 +9,7 @@ import android.location.Geocoder;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.trippoapp.model.PlacesApiService;
 import com.example.trippoapp.model.PlacesResponse;
@@ -33,8 +34,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
-    Button restaurant, route, parking, nearby, clear;
+    Button restaurant, route, parking, nearby, clear, pump;
     LatLng latLng1;
+    TextView service;
     String name1;
 
     @Override
@@ -46,7 +48,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         route = findViewById(R.id.route);
         parking = findViewById(R.id.parking);
         nearby = findViewById(R.id.nearby);
+        pump = findViewById(R.id.pump);
         clear = findViewById(R.id.clear);
+        service = findViewById(R.id.services);
 
         Bundle bundle = getIntent().getExtras();
         String placeId = null, name = null;
@@ -62,10 +66,14 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        service.setText(name1);
         restaurant.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mMap.clear();
+
+                service.setText("Restaurant");
 
                 String type = "restaurant";
                 int rad = 5000;
@@ -80,6 +88,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             public void onClick(View view) {
                 mMap.clear();
 
+                service.setText("Route");
+
                 String type = "parking";
                 int rad = 5000;
                 assert latLng != null;
@@ -92,8 +102,24 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             public void onClick(View view) {
                 mMap.clear();
 
+                service.setText("Parking");
+
                 String type = "parking";
                 int rad = 1500;
+                assert latLng != null;
+                fetchAndDisplayNearbyRestaurants(latLng, type, rad);
+            }
+        });
+
+        pump.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mMap.clear();
+
+                service.setText("Gas Station");
+
+                String type = "gas_station";
+                int rad = 10000;
                 assert latLng != null;
                 fetchAndDisplayNearbyRestaurants(latLng, type, rad);
             }
@@ -103,6 +129,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             @Override
             public void onClick(View view) {
                 mMap.clear();
+
+                service.setText("Nearby Attractions");
 
                 String type = "tourist_attraction";
                 int rad = 100000;
@@ -115,6 +143,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             @Override
             public void onClick(View view) {
                 mMap.clear();
+
+                service.setText(name1);
 
                 mMap.addMarker(new MarkerOptions().position(latLng).title(name1));
             }

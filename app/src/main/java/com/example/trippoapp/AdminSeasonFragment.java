@@ -173,6 +173,11 @@ public class AdminSeasonFragment extends Fragment {
                 season = autoCompleteTextView.getText().toString();
                 id = placeID;
 
+                if (place.isEmpty() || district.isEmpty() || state.isEmpty() || season.isEmpty()){
+                    Toast.makeText(getActivity(), "All field are required", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 DocumentReference documentReference = fStore.collection("season").document();
                 Map<String, Object> data = new HashMap<>();
                 data.put("placeId",id);

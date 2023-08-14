@@ -5,54 +5,56 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".AdminDetailedActivity"
-    android:background="#D0D0D0"
+    android:background="#AFF1F6"
     >
 
-    <androidx.cardview.widget.CardView
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_height="50dp"
+        android:text="Place name"
+        android:textSize="20dp"
+        android:gravity="center_vertical"
+        android:textStyle="bold"
+        android:id="@+id/place_name"
+        android:layout_gravity="center"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.3"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@drawable/white_bg"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:paddingStart="10dp"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="Season name"
+        android:textSize="20dp"
+        android:gravity="center_vertical"
+        android:layout_marginTop="20dp"
+        android:textStyle="bold"
+        android:id="@+id/season_name"
+        android:layout_gravity="center"
+        app:layout_constraintTop_toBottomOf="@+id/place_name"
 
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        app:cardCornerRadius="20dp"
-        app:elevation="200dp">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            >
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Place name"
-            android:textSize="30dp"
-            android:textStyle="bold"
-            android:layout_marginTop="20dp"
-            android:id="@+id/place_name"
-            android:layout_gravity="center"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Season"
-            android:textSize="30dp"
-            android:layout_marginTop="20dp"
-            android:id="@+id/season_name"
-            android:layout_gravity="center"
-            />
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="70dp"
-                android:text="Delete"
-                android:layout_gravity="center"
-                android:scaleType="fitCenter"
-                android:backgroundTint="@color/red"
-                android:layout_marginTop="20dp"
-                android:id="@+id/delete"/>
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
+        app:layout_constraintStart_toStartOf="parent"
+        android:background="@drawable/white_bg"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:paddingStart="10dp"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:text="Delete"
+        android:layout_gravity="center"
+        android:scaleType="fitCenter"
+        android:backgroundTint="@color/red"
+        android:layout_marginTop="20dp"
+        android:id="@+id/delete"
+        app:layout_constraintTop_toBottomOf="@+id/season_name"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
