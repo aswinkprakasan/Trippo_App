@@ -5,6 +5,10 @@
             android:title="HOME"
             android:icon="@drawable/baseline_home_24" />
         <item
+            android:id="@+id/nav_bucket"
+            android:title="ITINERARY"
+            android:icon="@drawable/baseline_favorite_24" />
+        <item
             android:id="@+id/nav_search"
             android:title="SEARCH"
             android:icon="@drawable/baseline_search_24" />

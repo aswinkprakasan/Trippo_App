@@ -41,6 +41,10 @@ public class SigninActivity extends AppCompatActivity {
                     Toast.makeText(SigninActivity.this, "All fields are mandatory", Toast.LENGTH_SHORT).show();
                 }
                 else {
+                    if (!android.util.Patterns.EMAIL_ADDRESS.matcher(mail).matches()){
+                        Toast.makeText(SigninActivity.this, "Invalid email", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                     ModelClass modelClass = new ModelClass("", mail, "", pass);
                     Boolean result = myDB.checkusernamepass(modelClass);
                     if (mail.equals("admin@gmail.com") || pass.equals("admin123")){

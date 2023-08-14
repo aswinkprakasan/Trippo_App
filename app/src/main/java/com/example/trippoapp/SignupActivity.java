@@ -42,6 +42,10 @@ public class SignupActivity extends AppCompatActivity {
                     Toast.makeText(SignupActivity.this, "Fill all the fields", Toast.LENGTH_SHORT).show();
                 }
                 else {
+                    if (!android.util.Patterns.EMAIL_ADDRESS.matcher(mail).matches()){
+                        Toast.makeText(SignupActivity.this, "Invalid email", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                     if (pass.equals(repass)){
                         ModelClass modelClass = new ModelClass("",mail,"",pass);
                         Boolean usercheckResult = myDB.checkuser(modelClass);

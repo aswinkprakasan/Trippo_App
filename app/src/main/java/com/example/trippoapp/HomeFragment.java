@@ -78,6 +78,7 @@ public class HomeFragment extends Fragment {
             fValue = "monsoon";
         }
 
+
         String season1 = "Places to visit this "+fValue+" !!";
         seasonName.setText(season1);
         Query query = fStore.collection("season").whereEqualTo(fName, fValue);
