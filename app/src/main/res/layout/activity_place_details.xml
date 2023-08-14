@@ -48,7 +48,27 @@
                 android:layout_marginTop="40dp"
                 android:layout_marginStart="35dp"
                 android:stepSize="1" />
+<!--            <ImageButton-->
+<!--                android:id="@+id/favoriteButton"-->
+<!--                android:layout_width="48dp"-->
+<!--                android:layout_height="48dp"-->
+<!--                android:layout_centerHorizontal="true"-->
+<!--                android:layout_marginStart="30dp"-->
+<!--                android:background="?android:attr/selectableItemBackgroundBorderless"-->
+<!--                android:src="@drawable/favourite_off"-->
+<!--                android:contentDescription="Favorite Button"-->
+<!--                android:layout_toEndOf="@+id/ratingBar"/>-->
 
+            <ToggleButton
+                android:id="@+id/favoriteButton"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/heart_selecter"
+                android:checked="false"
+                android:textOff=""
+                android:textOn=""
+                android:layout_toEndOf="@+id/ratingBar"
+                android:layout_marginStart="30dp"/>
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"

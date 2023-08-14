@@ -17,12 +17,59 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase myDB) {
         myDB.execSQL("CREATE TABLE users (id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT, email TEXT, password TEXT, number TEXT)");
         myDB.execSQL("CREATE TABLE ratings (id INTEGER PRIMARY KEY AUTOINCREMENT,email TEXT, placeId TEXT, placeName TEXT, rating FLOAT, review TEXT)");
+        myDB.execSQL("CREATE TABLE itinerary (id INTEGER PRIMARY KEY AUTOINCREMENT,email TEXT, placeId TEXT, placeName TEXT, status INTEGER)");
     }
     @Override
     public void onUpgrade(SQLiteDatabase myDB, int i, int i1) {
         myDB.execSQL("drop Table if exists users");
     }
 
+    public Boolean insertItinerary(String email, String placeId, String placeName, int heart){
+        SQLiteDatabase myDB = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("email", email);
+        contentValues.put("placeId", placeId);
+        contentValues.put("placeName", placeName);
+        contentValues.put("status", heart);
+
+        long result = myDB.insert("itinerary", null, contentValues);
+        if (result == -1){
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+
+    public Boolean updateItinerary(String email, String placeid, int heart){
+        SQLiteDatabase myDB = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("status", heart);
+
+        String whereClause = "placeId = ? and email = ?";
+        String[] whereArgs = {placeid, email};
+
+        long result = myDB.update("itinerary", contentValues, whereClause, whereArgs);
+
+        if (result == -1){
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+
+    public Cursor readItinerary(String placeid, String email){
+        SQLiteDatabase myDB = this.getReadableDatabase();
+        Cursor cursor = myDB.rawQuery("select * from itinerary where placeId = ?  and email = ?", new String[] {placeid, email});
+        return cursor;
+    }
+
+    public Cursor readStatus(String email){
+        SQLiteDatabase myDB = this.getReadableDatabase();
+        Cursor cursor = myDB.rawQuery("select * from itinerary where status = 1  and email = ?", new String[] {email});
+        return cursor;
+    }
     public Boolean insertData(ModelClass modelClass){
         SQLiteDatabase myDB = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
