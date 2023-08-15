@@ -7,6 +7,14 @@
     android:layout_height="match_parent"
     tools:context=".AdminActivity">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -15,7 +23,8 @@
         android:textColor="@color/black"
         android:id="@+id/admin"
         android:layout_marginTop="20dp"
-        android:layout_marginStart="20dp"/>
+        android:layout_marginStart="20dp"
+        android:layout_below="@+id/toolbar"/>
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -37,26 +46,24 @@
         android:textColor="@color/black"
         android:backgroundTint="@color/white"
         android:layout_gravity="center"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="30dp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         android:layout_below="@+id/admin"/>
 
-    <Button
-        android:id="@+id/logout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="logout"
-        android:layout_below="@+id/button1"/>
+
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="List of places"
-        android:layout_below="@+id/logout"
+        android:layout_below="@+id/button1"
         android:textSize="20dp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:layout_marginTop="10dp"
         android:layout_marginStart="10dp"
-        android:id="@+id/text"/>
+        android:id="@+id/text1"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
@@ -65,7 +72,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_below="@+id/text"/>
+        android:layout_below="@+id/text1"/>
 
 
 

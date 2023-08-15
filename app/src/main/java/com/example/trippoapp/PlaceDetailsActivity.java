@@ -18,12 +18,15 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -187,6 +190,61 @@ public class PlaceDetailsActivity extends AppCompatActivity implements OnMapRead
                 }
                 else {
                     Toast.makeText(PlaceDetailsActivity.this, "empty review", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        ToggleButton favoriteButton = findViewById(R.id.favoriteButton);
+//        favoriteButton.setChecked(true);
+
+        Cursor cursor1 = db.readItinerary(plceId, val);
+        if (cursor1.getCount() == 0) {
+            Toast.makeText(this, "not checked", Toast.LENGTH_SHORT).show();
+            favoriteButton.setChecked(false);
+
+        } else {
+            while (cursor1.moveToNext()) {
+                int heart = cursor1.getInt(4);
+                if (heart == 1){
+                    favoriteButton.setChecked(true);
+                }else {
+                    favoriteButton.setChecked(false);
+                }
+
+                cursor1.close();
+            }
+        }
+
+        favoriteButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                int heart = 0;
+                if (b){
+//                    Toast.makeText(PlaceDetailsActivity.this, "checked", Toast.LENGTH_SHORT).show();
+                    heart = 1;
+                }
+                else {
+//                    Toast.makeText(PlaceDetailsActivity.this, "not checked", Toast.LENGTH_SHORT).show();
+                    heart = 0;
+                }
+                Cursor cursor2 = db.readItinerary(plceId, val);
+                if (cursor2.getCount() == 0){
+                    Boolean result1 = db.insertItinerary(val,plceId,nme,heart);
+                    if (result1){
+                        Toast.makeText(PlaceDetailsActivity.this, "added to itinerary", Toast.LENGTH_SHORT).show();
+                    }
+                    else {
+                        Toast.makeText(PlaceDetailsActivity.this, "falied", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                else {
+                    Boolean result2 = db.updateItinerary(val,plceId,heart);
+                    if (result2){
+                        Toast.makeText(PlaceDetailsActivity.this, "updated to itinerary", Toast.LENGTH_SHORT).show();
+                    }
+                    else {
+                        Toast.makeText(PlaceDetailsActivity.this, "failed updation", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });

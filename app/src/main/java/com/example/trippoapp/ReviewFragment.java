@@ -25,7 +25,6 @@ import java.util.List;
 public class ReviewFragment extends Fragment {
 
     DBHelper db;
-    ListView listView;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -55,7 +54,6 @@ public class ReviewFragment extends Fragment {
             } while (cursor.moveToNext());
         }
         RecyclerView recyclerView = view.findViewById(R.id.recycle_view);
-        recyclerView.setEnabled(false);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
         recyclerView.setAdapter(new RecycleReviewAdapter(getActivity().getApplicationContext(),dataList));
         return view;
