@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Trippo</string>
-    <string name="getStart">Trippo is a travel planning app that simplifies your trip preparation. Discover inspiring destinations, create personalized itineraries, and explore handpicked recommendations. Start your unforgettable adventures today!</string>
+    <string name="getStart">Trippo is a Tourist place finder app that simplifies your trip preparation. Discover inspiring destinations, create personalized itineraries, and explore handpicked recommendations. Start your unforgettable adventures today!</string>
     <string name="open_nav">Open Navigation Drawer</string>
     <string name="close_nav">Close Navigation Drawer</string>
     <!-- TODO: Remove or change this placeholder text -->

@@ -392,7 +392,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 LatLng currentLatLng = new LatLng(location.getLatitude(), location.getLongitude());
                 currentLoc = currentLatLng;
 //                gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 15));
-                Toast.makeText(MapsActivity.this, "current location using fused", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MapsActivity.this, "current location is fetched", Toast.LENGTH_SHORT).show();
                 fusedLocationProviderClient.removeLocationUpdates(locationCallback);
 
                 LatLng End = new LatLng(10.530345, 76.214729);
@@ -433,7 +433,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         double lng = location.getLongitude();
 
 //        currentLoc = new LatLng(lat, lng);
-        Toast.makeText(this, "Current location:\n" + location, Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "Current location.", Toast.LENGTH_LONG).show();
     }
 
     @Override
