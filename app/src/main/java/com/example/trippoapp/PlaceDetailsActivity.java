@@ -128,7 +128,7 @@ public class PlaceDetailsActivity extends AppCompatActivity implements OnMapRead
         Cursor cursor = db.readRating(plceId, val);
 
         if (cursor.getCount() == 0) {
-            Toast.makeText(this, "no rating", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "rating is empty", Toast.LENGTH_SHORT).show();
 
         } else {
             while (cursor.moveToNext()) {
@@ -231,7 +231,7 @@ public class PlaceDetailsActivity extends AppCompatActivity implements OnMapRead
                 if (cursor2.getCount() == 0){
                     Boolean result1 = db.insertItinerary(val,plceId,nme,heart);
                     if (result1){
-                        Toast.makeText(PlaceDetailsActivity.this, "added to itinerary", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(PlaceDetailsActivity.this, "added to bucket list", Toast.LENGTH_SHORT).show();
                     }
                     else {
                         Toast.makeText(PlaceDetailsActivity.this, "falied", Toast.LENGTH_SHORT).show();
@@ -240,7 +240,7 @@ public class PlaceDetailsActivity extends AppCompatActivity implements OnMapRead
                 else {
                     Boolean result2 = db.updateItinerary(val,plceId,heart);
                     if (result2){
-                        Toast.makeText(PlaceDetailsActivity.this, "updated to itinerary", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(PlaceDetailsActivity.this, "updated to bucketlist", Toast.LENGTH_SHORT).show();
                     }
                     else {
                         Toast.makeText(PlaceDetailsActivity.this, "failed updation", Toast.LENGTH_SHORT).show();
@@ -287,12 +287,12 @@ public class PlaceDetailsActivity extends AppCompatActivity implements OnMapRead
         documentReference.update(updates).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
-                Toast.makeText(PlaceDetailsActivity.this, "success updated fstore", Toast.LENGTH_SHORT).show();
+                Toast.makeText(PlaceDetailsActivity.this, "successfully updated firestore", Toast.LENGTH_SHORT).show();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(PlaceDetailsActivity.this, "update fstore failed", Toast.LENGTH_SHORT).show();
+                Toast.makeText(PlaceDetailsActivity.this, "updation firestore failed", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -311,12 +311,12 @@ public class PlaceDetailsActivity extends AppCompatActivity implements OnMapRead
         documentReference.set(data).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
-                Toast.makeText(PlaceDetailsActivity.this, "firestore Added successfully", Toast.LENGTH_SHORT).show();
+                Toast.makeText(PlaceDetailsActivity.this, "Added to firestore successfully", Toast.LENGTH_SHORT).show();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(PlaceDetailsActivity.this, "firestore failed", Toast.LENGTH_SHORT).show();
+                Toast.makeText(PlaceDetailsActivity.this, "firestore addition failed", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -387,7 +387,7 @@ public class PlaceDetailsActivity extends AppCompatActivity implements OnMapRead
 
         // Add a marker in Sydney and move the camera
 //        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(latLng).title("Marker in Sydney"));
+        mMap.addMarker(new MarkerOptions().position(latLng).title(nme));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
 
     }

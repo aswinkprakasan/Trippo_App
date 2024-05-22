@@ -1,6 +1,7 @@
 package com.example.trippoapp.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.trippoapp.PlaceDetailsActivity;
 import com.example.trippoapp.R;
 import com.example.trippoapp.model.AdminRecycleClass;
 
@@ -36,6 +38,17 @@ public class RecycleReviewAdapter extends RecyclerView.Adapter<MyViewHolder3>{
 
         holder.name.setText(adminRecycle.get(position).getName());
         holder.season.setText(adminRecycle.get(position).getSeason());
+
+        holder.cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, PlaceDetailsActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra("Id", adminRecycle.get(holder.getBindingAdapterPosition()).getId());
+                intent.putExtra("Name", adminRecycle.get(holder.getBindingAdapterPosition()).getName());
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -52,5 +65,7 @@ class MyViewHolder3 extends RecyclerView.ViewHolder{
 
         name = itemView.findViewById(R.id.name);
         season = itemView.findViewById(R.id.season);
+        cardView = itemView.findViewById(R.id.card3);
+
     }
 }
